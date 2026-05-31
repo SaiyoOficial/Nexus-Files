@@ -1,0 +1,31 @@
+{
+    "pt-br":{
+
+        "files":{
+            "noinlist":"Desculpe-nos, porém esse site não está na nossa lista, por isso não temos poder para te fornecer os arquivos que você deseja.",
+            "UrlOnly":"Desculpe-nos, porém só aceitamos URL."
+        },
+        "Home":{
+            "message":"O que você deseja obter?",
+            "choices":["Vídeos", "Músicas", "Animes", "Livros"]
+        },
+        "Videos":{
+            "FormatMessage":"Selecione o formato desejado para o Vídeo.",
+            "message":"Insira a URL:",
+            "Spinner":{
+                "DownloadingVideos":"Baixando Vídeo.",
+                "FullDownloads":"Downloads Completo!"
+            }
+        },
+        "Songs":{
+            "FormatMessage":"Selecione o formato desejado para a Música.",
+            "message":"Insira a URL:",
+            "Spinner":{
+                "DownloadingSounds":"Baixando musica.",
+                "FullDownloads":"Downloads Completo!"
+            }
+        }
+    }
+   }
+
+ 

@@ -1,0 +1,30 @@
+{
+  "name": "nexus-files-(simplifying-downloads)",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@inquirer/prompts": "^8.5.1",
+    "axios": "^1.16.1",
+    "ora": "^9.4.0"
+  },
+  "bin": "index.js",
+  "pkg": {
+    "assets": [
+      "public/**/*",
+      "json/**/*",
+      "src/**/*"
+    ]
+  },
+  "devDependencies": {
+    "caxa": "^3.0.1",
+    "esbuild": "^0.28.0"
+  }
+}
