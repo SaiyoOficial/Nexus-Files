@@ -1,10 +1,9 @@
 {
-  "name": "nexus-files-(simplifying-downloads)",
-  "version": "1.0.0",
+  "name": "nexus-files",
+  "version": "1.0.3",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build":"npx caxa --input . --output Nexus-files.exe -- {{caxa}}/node_modules/.bin/node {{caxa}}/index.js"
   },
   "keywords": [],
