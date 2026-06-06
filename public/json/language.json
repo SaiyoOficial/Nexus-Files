@@ -1,31 +1,108 @@
 {
-    "pt-br":{
-
-        "files":{
-            "noinlist":"Desculpe-nos, porém esse site não está na nossa lista, por isso não temos poder para te fornecer os arquivos que você deseja.",
-            "UrlOnly":"Desculpe-nos, porém só aceitamos URL."
-        },
-        "Home":{
-            "message":"O que você deseja obter?",
-            "choices":["Vídeos", "Músicas", "Animes", "Livros"]
-        },
-        "Videos":{
-            "FormatMessage":"Selecione o formato desejado para o Vídeo.",
-            "message":"Insira a URL:",
-            "Spinner":{
-                "DownloadingVideos":"Baixando Vídeo.",
-                "FullDownloads":"Downloads Completo!"
-            }
-        },
-        "Songs":{
-            "FormatMessage":"Selecione o formato desejado para a Música.",
-            "message":"Insira a URL:",
-            "Spinner":{
-                "DownloadingSounds":"Baixando musica.",
-                "FullDownloads":"Downloads Completo!"
-            }
-        }
+  "pt-br": {
+    "Init": {
+      "message": "Seja bem vindo ao Nexus file.",
+      "choices": [
+        "Entrar",
+        "Configurações"
+      ]
+    },
+    "Settings": {
+      "message": "O que você quer modificar?",
+      "choices": [
+        "Idioma",
+        "Configurações adicionais"
+      ]
+    },
+        "Language": {
+      "message":"Escolha o idioma"
+    },
+    "Error": {
+      "Default": "Desculpe-nos porem algo falhou.",
+      "Retry": "Tentando novamente...",
+      "MaxRetry": "Tentativa máxima alcançada."
+    },
+    "files": {
+      "noinlist": "Desculpe-nos, porém esse site não está na nossa lista, por isso não temos poder para te fornecer os arquivos que você deseja.",
+      "UrlOnly": "Desculpe-nos, porém só aceitamos URL."
+    },
+    "Home": {
+      "message": "O que você deseja obter?",
+      "choices": [
+        "Vídeos",
+        "Músicas",
+        "Animes",
+        "Livros"
+      ]
+    },
+    "Videos": {
+      "FormatMessage": "Selecione o formato desejado para o Vídeo.",
+      "message": "Insira a URL:",
+      "Spinner": {
+        "DownloadingVideos": "Baixando Vídeo.",
+        "FullDownloads": "Downloads Completo!"
+      }
+    },
+    "Songs": {
+      "FormatMessage": "Selecione o formato desejado para a Música.",
+      "message": "Insira a URL:",
+      "Spinner": {
+        "DownloadingSounds": "Baixando musica.",
+        "FullDownloads": "Downloads Completo!"
+      }
     }
-   }
-
- 
+  },
+  "en-us": {
+    "Init": {
+      "message": "Welcome to Nexus file.",
+      "choices": [
+        "Enter",
+        "Settings"
+      ]
+    },
+    "Settings": {
+      "message": "What do you want to modify?",
+      "choices": [
+        "Language",
+        "Additional settings"
+      ]
+    },
+    "Language": {
+      "message":"Choose language"
+    },
+    "Error": {
+      "Default": "Something Failed!.",
+      "Retry": "Trying Again",
+      "MaxRetry": "Maximum attempt reached."
+    },
+    "files": {
+      "noinlist": "Sorry, but this website is not on our list, so we are unable to provide the files you want.",
+      "UrlOnly": "Sorry, but we only accept URLs."
+    },
+    "Home": {
+      "message": "What would you like to get?",
+      "choices": [
+        "Videos",
+        "Music",
+        "Anime",
+        "Books"
+      ]
+    },
+    "Videos": {
+      "FormatMessage": "Select the desired format for the video.",
+      "message": "Enter the URL:",
+      "Spinner": {
+        "DownloadingVideos": "Downloading video.",
+        "FullDownloads": "Downloads completed!"
+      }
+    },
+    "Songs": {
+      "FormatMessage": "Select the desired format for the music.",
+      "message": "Enter the URL:",
+      "Spinner": {
+        "DownloadingSounds": "Downloading music.",
+        "FullDownloads": "Downloads completed!"
+      }
+    }
+  }
+}
