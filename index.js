@@ -1,3 +1,4 @@
+const path = require("path")
 const language = require("./public/json/language.json")
 const settings = require("./public/json/settings.json")
 const controllers = require("./public/src/controllers")
@@ -31,7 +32,7 @@ async function __init__() {
                     choices: Data
                 })
                 settings.language = LanguageSelect
-                fs.writeFileSync("./public/json/settings.json", `{"language":"${LanguageSelect}"}`)
+                fs.writeFileSync(`${path.join(__dirname,"public","json","settings.json")}`, `{"language":"${LanguageSelect}"}`)
                 console.clear()
                 continue
             }

@@ -5,7 +5,7 @@ const path = require("path")
 const execPromise = require("util").promisify(require("child_process").exec)
 const WaitSeconds = (ms) => new Promise((r) => { setInterval(r, ms) })
 const utils = path.join(__dirname, "../utils")
-const Cache = path.join(__dirname, "../../Cache")
+const Cache = "./Cache"// path.join(__dirname, "../../Cache")
 let Retry = 3
 const CheckURL = async ({ url }) => {
     const Websites = ['www.youtube.com']
