@@ -32,10 +32,12 @@ const CheckURL = async ({ url }) => {
 
 
 async function Youtube(Response, infos) {
-    const Spinner = ora.default("").start()
+    let Command
+   
     try {
+  
         if (Response.Success) {
-            
+               const Spinner = ora.default("").start()
 
             Spinner.color = "yellow"
             if (infos.type == "Sounds") {
@@ -59,7 +61,7 @@ async function Youtube(Response, infos) {
 
         }
     } catch (error) {
-        console.log(error)
+        const Spinner = ora.default("").start()
         await WaitSeconds(3)
         console.clear()
         if (Retry > 0) {
@@ -80,10 +82,9 @@ async function Youtube(Response, infos) {
 
 
 async function Donwload(infos) {
-    let Command
     const Response = await CheckURL({ url: infos.value })
-    await Youtube(Response, infos)
-    console.clear()
+      await Youtube(Response, infos)
+        console.clear()
 }
 
 

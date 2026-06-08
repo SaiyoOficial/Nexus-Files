@@ -7,6 +7,13 @@
         "Configurações"
       ]
     },
+    "Update":{
+      "Completed":"Atualização completa!",
+      "Current Update":"Você já está na última versão!"
+    },
+        "Cache":{
+      "Completed":"Cache limpo!"
+    },
     "Settings": {
       "message": "O que você quer modificar?",
       "choices": [
@@ -14,8 +21,15 @@
         "Configurações adicionais"
       ]
     },
-        "Language": {
-      "message":"Escolha o idioma"
+    "AdSettings": {
+      "message": "O que você quer fazer?", 
+      "choices": [
+        "Limpar cache",
+        "Atualizar aplicativo"
+      ]
+    },
+    "Language": {
+      "message": "Escolha o idioma"
     },
     "Error": {
       "Default": "Desculpe-nos porem algo falhou.",
@@ -60,6 +74,13 @@
         "Settings"
       ]
     },
+    "Update":{
+      "Completed":"Full update!",
+      "Current Update":"You are already in the last version!"
+    },
+    "Cache":{
+      "Completed":"Clean Cache!!"
+    },
     "Settings": {
       "message": "What do you want to modify?",
       "choices": [
@@ -67,8 +88,15 @@
         "Additional settings"
       ]
     },
+        "AdSettings": {
+      "message": "What do you want to do?", 
+      "choices": [
+        "Clear cache",
+        "Update application"
+      ]
+    },
     "Language": {
-      "message":"Choose language"
+      "message": "Choose language"
     },
     "Error": {
       "Default": "Something Failed!.",
