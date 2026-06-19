@@ -1,136 +1,126 @@
 {
-  "pt-br": {
-    "Init": {
-      "message": "Seja bem vindo ao Nexus file.",
-      "choices": [
-        "Entrar",
-        "Configurações"
-      ]
+    "pt-br": {
+        "Home": {
+            "Message": "Seja bem vindo ao Nexus file.",
+            "Choices": [
+                "Entrar",
+                "Configurações",
+                "Sair"
+            ]
+        },
+        "Videos": {
+            "Message": "Insira a URL"
+        },
+        "Update": {
+            "Completed": "Atualização completa!",
+            "Current Update": "Você já está na última versão!"
+        },
+        "Get": {
+            "Message": "O que você deseja obter?",
+            "Choices": [
+                "Vídeos",
+                "Músicas",
+                "Animes",
+                "Livros"
+            ]
+        },
+        "Default": {
+            "Format": {
+                "Message": "Selecione o formato desejado."
+            },
+            "Error": {
+                "Message": "Algo no sistema falhou Desculpe-nos."
+            }
+        },
+        "yt-dlp": {
+            "Error": "Desculpe, mas algo falhou no yt-dlp",
+            "Sucess": "Conteúdo baixado com sucesso!",
+            "Videos": "Baixando vídeos!",
+            "Sounds": "Baixando musicas!"
+        },
+        "Book": {
+            "Message": "Insira a URL",
+            "Download": "Baixando obra!",
+            "Sucess": "Conteúdo baixado com sucesso!"
+        },
+        "Language": {
+            "Message": "Escolha o idioma"
+        },
+        "__init__": {
+            "Error": "Lamentamos. No entanto, não conseguimos baixar o conteúdo do site. Verifique nossa documentação sobre quais sites estão disponíveis!"
+        },
+        "Options": {
+            "Message": " O que você quer fazer?",
+            "Choices": [
+                "Abrir Cache",
+                "Limpar Cache",
+                "Abrir Logs",
+                "Limpar Logs",
+                "Alterar idioma",
+                "Atualizar Aplicação"
+            ]
+        }
     },
-    "Update":{
-      "Completed":"Atualização completa!",
-      "Current Update":"Você já está na última versão!"
-    },
-        "Cache":{
-      "Completed":"Cache limpo!"
-    },
-    "Settings": {
-      "message": "O que você quer modificar?",
-      "choices": [
-        "Idioma",
-        "Configurações adicionais"
-      ]
-    },
-    "AdSettings": {
-      "message": "O que você quer fazer?", 
-      "choices": [
-        "Limpar cache",
-        "Atualizar aplicativo"
-      ]
-    },
-    "Language": {
-      "message": "Escolha o idioma"
-    },
-    "Error": {
-      "Default": "Desculpe-nos porem algo falhou.",
-      "Retry": "Tentando novamente...",
-      "MaxRetry": "Tentativa máxima alcançada."
-    },
-    "files": {
-      "noinlist": "Desculpe-nos, porém esse site não está na nossa lista, por isso não temos poder para te fornecer os arquivos que você deseja.",
-      "UrlOnly": "Desculpe-nos, porém só aceitamos URL."
-    },
-    "Home": {
-      "message": "O que você deseja obter?",
-      "choices": [
-        "Vídeos",
-        "Músicas",
-        "Animes",
-        "Livros"
-      ]
-    },
-    "Videos": {
-      "FormatMessage": "Selecione o formato desejado para o Vídeo.",
-      "message": "Insira a URL:",
-      "Spinner": {
-        "DownloadingVideos": "Baixando Vídeo.",
-        "FullDownloads": "Downloads Completo!"
-      }
-    },
-    "Songs": {
-      "FormatMessage": "Selecione o formato desejado para a Música.",
-      "message": "Insira a URL:",
-      "Spinner": {
-        "DownloadingSounds": "Baixando musica.",
-        "FullDownloads": "Downloads Completo!"
-      }
+    "en-us": {
+        "Home": {
+            "Message": "Welcome to Nexus file.",
+            "Choices": [
+                "Enter",
+                "Settings",
+                "Exit"
+            ]
+        },
+        "Videos": {
+            "Message": "Enter URL"
+        },
+        "Update": {
+            "Completed": "Update completed!",
+            "Current Update": "You are already on the latest version!"
+        },
+        "Get": {
+            "Message": "What would you like to get?",
+            "Choices": [
+                "Videos",
+                "Music",
+                "Anime",
+                "Books"
+            ]
+        },
+        "Default": {
+            "Format": {
+                "Message": "Select the desired format."
+            },
+            "Error": {
+                "Message": "Something in the system failed. We apologize."
+            }
+        },
+        "yt-dlp": {
+            "Error": "Sorry, but something failed in yt-dlp",
+            "Sucess": "Content downloaded successfully!",
+            "Videos": "Downloading videos!",
+            "Sounds": "Downloading music!"
+        },
+        "Book": {
+            "Message": "Enter URL",
+            "Download": "Downloading work!",
+            "Sucess": "Content downloaded successfully!"
+        },
+        "Language": {
+            "Message": "Choose language"
+        },
+        "__init__": {
+            "Error": "We apologize. However, we were unable to download content from the site. Please check our documentation on which sites are supported!"
+        },
+        "Options": {
+            "Message": " What would you like to do?",
+            "Choices": [
+                "Open Cache",
+                "Clear Cache",
+                "Open Logs",
+                "Clear Logs",
+                "Change Language",
+                "Update Application"
+            ]
+        }
     }
-  },
-  "en-us": {
-    "Init": {
-      "message": "Welcome to Nexus file.",
-      "choices": [
-        "Enter",
-        "Settings"
-      ]
-    },
-    "Update":{
-      "Completed":"Full update!",
-      "Current Update":"You are already in the last version!"
-    },
-    "Cache":{
-      "Completed":"Clean Cache!!"
-    },
-    "Settings": {
-      "message": "What do you want to modify?",
-      "choices": [
-        "Language",
-        "Additional settings"
-      ]
-    },
-        "AdSettings": {
-      "message": "What do you want to do?", 
-      "choices": [
-        "Clear cache",
-        "Update application"
-      ]
-    },
-    "Language": {
-      "message": "Choose language"
-    },
-    "Error": {
-      "Default": "Something Failed!.",
-      "Retry": "Trying Again",
-      "MaxRetry": "Maximum attempt reached."
-    },
-    "files": {
-      "noinlist": "Sorry, but this website is not on our list, so we are unable to provide the files you want.",
-      "UrlOnly": "Sorry, but we only accept URLs."
-    },
-    "Home": {
-      "message": "What would you like to get?",
-      "choices": [
-        "Videos",
-        "Music",
-        "Anime",
-        "Books"
-      ]
-    },
-    "Videos": {
-      "FormatMessage": "Select the desired format for the video.",
-      "message": "Enter the URL:",
-      "Spinner": {
-        "DownloadingVideos": "Downloading video.",
-        "FullDownloads": "Downloads completed!"
-      }
-    },
-    "Songs": {
-      "FormatMessage": "Select the desired format for the music.",
-      "message": "Enter the URL:",
-      "Spinner": {
-        "DownloadingSounds": "Downloading music.",
-        "FullDownloads": "Downloads completed!"
-      }
-    }
-  }
 }

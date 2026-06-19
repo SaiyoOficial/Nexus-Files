@@ -1,30 +1,28 @@
 {
   "name": "nexus-files",
-  "version": "1.0.5",
-  "description": "",
+  "version": "2.0.5",
+  "description": "An application made with the aim of simplifying the download of books, music midias mangas and much more",
+  "keywords": [
+    "songs",
+    "anime",
+    "videos",
+    "download",
+    "cli"
+  ],
+  "license": "ISC",
+  "author": "Saiyo",
+  "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "build":"npx caxa --input . --output Nexus-files.exe -- {{caxa}}/node_modules/.bin/node {{caxa}}/index.js"
+    "build": "npx caxa --input . --output Nexus-files.exe -- {{caxa}}/node_modules/.bin/node {{caxa}}/index.js",
+    "test": "cls && node index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
-    "@inquirer/prompts": "^8.5.1",
-    "axios": "^1.16.1",
-    "ora": "^9.4.0"
-  },
-  "bin": "index.js",
-  "pkg": {
-    "assets": [
-      "public/**/*",
-      "json/**/*",
-      "src/**/*"
-    ]
-  },
-  "devDependencies": {
+    "@inquirer/prompts": "^8.5.2",
+    "axios": "^1.17.0",
     "caxa": "^3.0.1",
-    "esbuild": "^0.28.0"
+    "cheerio": "^1.2.0",
+    "open": "^11.0.0",
+    "ora": "^9.4.0"
   }
 }
