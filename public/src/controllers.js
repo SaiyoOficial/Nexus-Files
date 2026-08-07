@@ -20,7 +20,6 @@ const DevTools = {
     Debug: false
 }
 async function VerifyFolders() {
-
     fs.mkdir(Cache, { recursive: true })
     fs.mkdir(Logs, { recursive: true })
     fs.mkdir(`${path.join(__dirname, "../", "logs")}`, { recursive: true })
@@ -30,7 +29,6 @@ async function VerifyFolders() {
     if (!existsSync(`${Logs}/yt-dlp.log`)) { fs.writeFile(`${Logs}/yt-dlp.log`, '', "utf-8") }
     if (!existsSync(`${Logs}/mangalivre.log`)) { fs.writeFile(`${Logs}/mangalivre.log`, '', "utf-8") }
     if (!existsSync(`${Logs}/Nexus-files.log`)) { fs.writeFile(`${Logs}/Nexus-files.log`, '', "utf-8") }
-
     const watcher = fs.watch(path.join(__dirname, "../"), { persistent: true })
     for await (const event of watcher) {
         const { EventType, filename } = event
@@ -44,8 +42,6 @@ async function VerifyFolders() {
             if (!existsSync(`${Logs}/yt-dlp.log`)) { fs.writeFile(`${Logs}/yt-dlp.log`, '', "utf-8") }
             if (!existsSync(`${Logs}/mangalivre.log`)) { fs.writeFile(`${Logs}/mangalivre.log`, '', "utf-8") }
             if (!existsSync(`${Logs}/Nexus-files.log`)) { fs.writeFile(`${Logs}/Nexus-files.log`, '', "utf-8") }
-
-            // 
         }
     }
 }
@@ -89,14 +85,8 @@ const Donwload = class {
         } catch (message) {
             this.ErrorManager.Logs({ message })
         }
-
     }
-
-
     ErrorManager = { Logs: async function ({ message }) { await fs.appendFile(path.join(Logs, "/", "Nexus-files.log"), `[error] ${message.toString() + "\n"}`) } }
-    // fs.writeFile(`${Logs}/${`${new Date().getHours()}:${new Date().getMinutes().toString().length < 2 ? 0 : ""}${new Date().getMinutes()}`.toString().replace(":", "")}.log`, message.toString(), { encoding: "utf-8" })
-
-
     async ReadFile({ Path }) {
         const File = await (await fs.readFile(Path, { encoding: "utf-8" })).split("\n").map(url => url.trim()).filter(url => url !== '')
         for (const Urls of File) {
@@ -108,74 +98,39 @@ const Donwload = class {
             }
         }
     }
-
-
-
     async CoreYtdl({ Urls }) {
         if (this.Data.Websites === "File") {
             if (this.UserData.Type === "Sounds") {
-                Command = `"${utils}\\yt-dlp.exe" --yes-playlist -x --audio-format ${this.UserData.Format} --ffmpeg-location "${utils}\\ffmpeg.exe" -a "${Urls}" --audio-quality 0 --embed-thumbnail --embed-metadata --embed-chapters --embed-info-json --convert-thumbnails png --retries 10 --fragment-retries 10 --download-archive "${Cache}\\Sounds.txt" --sleep-requests 5 --sleep-interval 3 --max-sleep-interval 5 -o "Download/Songs/%(uploader)s/%(title)s.%(ext)s" >> "${Logs}\\yt-dlp.log"`
+                Command = `"${utils}\\yt-dlp.exe" --yes-playlist -x --audio-format ${this.UserData.Format} --ffmpeg-location "${utils}" -a "${Urls}" --audio-quality 0 --embed-thumbnail --embed-metadata --embed-chapters --embed-info-json --convert-thumbnails png --retries 10 --fragment-retries 10 --download-archive "${Cache}\\Sounds.txt" --sleep-requests 5 --sleep-interval 3 --max-sleep-interval 5 -o "Download/Songs/%(uploader)s/%(title)s.%(ext)s" >> "${Logs}\\yt-dlp.log"`
             } else {
                 Command = `"${utils}\\yt-dlp.exe" --ffmpeg-location "${utils}" -a "${Urls}" --yes-playlist -f "bv*[height<=4320]+ba/bv*+ba/b/best" --remux-video ${this.UserData.Format} --embed-thumbnail --embed-metadata --embed-chapters --embed-info-json --convert-thumbnails png --retries 10 --fragment-retries 10 --download-archive "${Cache}\\Videos.txt" --sleep-requests 5 --sleep-interval 5 --max-sleep-interval 15 -o "Download/Videos/%(uploader)s/%(title)s.%(ext)s" >> "${Logs}\\yt-dlp.log"`
             }
         } else {
             this.UserData.Type === "Sounds" ?
-                Command = `"${utils}\\yt-dlp.exe" --yes-playlist -x --audio-format ${this.UserData.Format} --ffmpeg-location "${utils}\\ffmpeg.exe" --audio-quality 0 --embed-thumbnail --embed-metadata --embed-chapters --embed-info-json --convert-thumbnails png --retries 10 --fragment-retries 10 --download-archive "${Cache}\\Sounds.txt" --sleep-requests 5 --sleep-interval 3 --max-sleep-interval 5 -o "Download/Songs/%(uploader)s/%(title)s.%(ext)s" "${Urls}" >> "${Logs}\\yt-dlp.log"` :
+                Command = `"${utils}\\yt-dlp.exe" --yes-playlist -x --audio-format ${this.UserData.Format} --ffmpeg-location "${utils}" --audio-quality 0 --embed-thumbnail --embed-metadata --embed-chapters --embed-info-json --convert-thumbnails png --retries 10 --fragment-retries 10 --download-archive "${Cache}\\Sounds.txt" --sleep-requests 5 --sleep-interval 3 --max-sleep-interval 5 -o "Download/Songs/%(uploader)s/%(title)s.%(ext)s" "${Urls}" >> "${Logs}\\yt-dlp.log"` :
                 Command = `"${utils}\\yt-dlp.exe" --ffmpeg-location "${utils}" --yes-playlist -f "bv*[height<=4320]+ba/bv*+ba/b/best" --remux-video ${this.UserData.Format} --embed-thumbnail --embed-metadata --embed-chapters --embed-info-json --convert-thumbnails png --retries 10 --fragment-retries 10 --download-archive "${Cache}\\Videos.txt" --sleep-requests 5 --sleep-interval 5 --max-sleep-interval 15 -o "Download/Videos/%(uploader)s/%(title)s.%(ext)s" "${Urls}" >> "${Logs}\\yt-dlp.log"`
         }
         await new Promise((resolver, reject) => {
             const ytdlp = spawn(Command, { shell: true, maxBuffer: 1024 * 1024 * 50, stdio: ['pipe', 'pipe', 'pipe'] })
             const Spinner = ora.default(Translation[Settings.Language]["yt-dlp"][this.UserData.Type]).start()
+            if (DevTools.Debug === true) {
+                ytdlp.stderr.on('data', (data) => {
+                    console.error(`❌ ERROR: ${data.toString()}`);
+                });
+
+                ytdlp.stdout.on('data', (data) => {
+                    console.log(`EXIT: ${data.toString()}`);
+                });
+
+                ytdlp.on('close', (code) => {
+                    console.log(`Error Code: ${code}`);
+                });
+            }
             ytdlp.on("close", () => { Spinner.succeed(Translation[Settings.Language]["yt-dlp"].Sucess); resolver() });
             ytdlp.on("error", (message) => { Spinner.fail(Translation[Settings.Language]['yt-dlp'].Error); this.ErrorManager.Logs({ message }); reject(message) });
         })
-
         await WaitSeconds(5)
-
-
-
-
-        if (DevTools.Debug === true) {
-            ytdlp.stderr.on('data', (data) => {
-                console.error(`❌ ERROR: ${data.toString()}`);
-            });
-
-            ytdlp.stdout.on('data', (data) => {
-                console.log(`EXIT: ${data.toString()}`);
-            });
-
-            ytdlp.on('close', (code) => {
-                console.log(`Error Code: ${code}`);
-            });
-        }
-
-        // ytdlp.stdout.on("data", (e) => {
-        //     console.log(e.toString())
-        // })
-        //     ytdlp.stdout.on("data", (e) => { 
-
-
-        // let data = e.toString()
-        // const match = data.match(/\[download\]\s*(\d+(?:\.\d+)?)\s*%/)
-        // if(match){
-        //     console.log(`${match[1] || 0}%`) // Terminar sistema de Porcentagem
-        // }
-
-        //     })
-
-
-
-
-
-
     }
-    // let data = e.toString()
-    // const match = data.match(/\[download\]\s*(\d+(?:\.\d+)?)\s*%/)
-    // if(match){
-    //     console.log(`${match[1] || 0}%`) // Terminar sistema de Porcentagem
-
-    // }
-
     async Mangalivre({ Urls }) {
         try {
             let MangalivreLogs = []
@@ -183,7 +138,7 @@ const Donwload = class {
             await fs.mkdir("./Download/Books", { recursive: true })
             await WaitSeconds(Math.floor(Math.random() * 2) + 1)
             if (!Urls.includes("mangalivre.blog/manga")) {
-                if (!MLSpinner){ MLSpinner = ora.default(Translation[Settings.Language].Book.Download).start()}
+                if (!MLSpinner) { MLSpinner = ora.default(Translation[Settings.Language].Book.Download).start() }
                 let images = []
                 let Response = await axios.get(Urls)
                 let html = cheerio.load(Response.data)
@@ -209,7 +164,7 @@ const Donwload = class {
                                 return status >= 200 && status < 300;
                             }
                         })
-                        if (!img.data || img.data.length === 0) {MangalivreLogs.push(`[info] File received Empty`);console.log(Translation[Settings.Language].__init__.Error)}
+                        if (!img.data || img.data.length === 0) { MangalivreLogs.push(`[info] File received Empty`); console.log(Translation[Settings.Language].__init__.Error) }
                         MangalivreLogs.push(`[info] Making a request to the internet`)
                         const filePath = `./Download/Books/${Name}/${Chapter}/${index}.${this.UserData.Format}`
                         await fs.mkdir(path.dirname(filePath), { recursive: true });
@@ -224,19 +179,12 @@ const Donwload = class {
                         MangalivreLogs.push(`[info] Elementro With the name of ${CacheKey} found in the cache, parsing the next one from the list`)
                     }
                 }
-
-                if (!MLList){
+                if (!MLList) {
                     MLSpinner.succeed(Translation[Settings.Language].Book.Sucess)
                     MLSpinner = null
                 }
-
-
                 if (CacheSave.length > 0) { await fs.appendFile(`${Cache}/Books.txt`, CacheSave.join('\n') + '\n') }
-
                 if (MangalivreLogs.length > 0) { await fs.appendFile(`${Logs}/mangalivre.log`, MangalivreLogs.join('\n') + '\n') }
-
-
-
             } else {
                 await WaitSeconds(1)
                 MLList = true
@@ -244,7 +192,6 @@ const Donwload = class {
                 let Page = await axios.get(Urls)
                 let Home = cheerio.load(Page.data)
                 Home('.chapter-item .chapter-info a').each((i, el) => { Chapters.push(Home(el).attr('href')) })
-
                 let Cover = Home('img.manga-cover-image.wp-post-image').attr('srcset').split(' ')[0]
                 let BooksCache = new Set()
                 const data = await fs.readFile(`${Cache}/Books.txt`, 'utf-8');
@@ -266,37 +213,8 @@ const Donwload = class {
                 MLList = null
             }
             await WaitSeconds(5)
-
+            return
         } catch (message) { this.ErrorManager.Logs({ message }); console.log(Translation[Settings.Language].__init__.Error) }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
-
 }
-
-
 module.exports = Donwload

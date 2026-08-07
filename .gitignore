@@ -4,8 +4,9 @@ node_modules
 
 # General Information 
 
-public\Logs
-public\Cache
+*.log
+*.txt
+*.exe
 
 # Files
 
