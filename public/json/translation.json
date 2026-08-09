@@ -1,66 +1,4 @@
 {
-    "pt-br": {
-        "Home": {
-            "Message": "Seja bem vindo ao Nexus file.",
-            "Choices": [
-                "Entrar",
-                "Configurações",
-                "Sair"
-            ]
-        },
-        "Videos": {
-            "Message": "Insira a URL"
-        },
-        "Update": {
-            "Completed": "Atualização completa!",
-            "Current Update": "Você já está na última versão!"
-        },
-        "Get": {
-            "Message": "O que você deseja obter?",
-            "Choices": [
-                "Vídeos",
-                "Músicas",
-                "Animes",
-                "Livros"
-            ]
-        },
-        "Default": {
-            "Format": {
-                "Message": "Selecione o formato desejado."
-            },
-            "Error": {
-                "Message": "Algo no sistema falhou Desculpe-nos."
-            }
-        },
-        "yt-dlp": {
-            "Error": "Desculpe, mas algo falhou no yt-dlp",
-            "Sucess": "Conteúdo baixado com sucesso!",
-            "Videos": "Baixando vídeos!",
-            "Sounds": "Baixando musicas!"
-        },
-        "Book": {
-            "Message": "Insira a URL",
-            "Download": "Baixando obra!",
-            "Sucess": "Conteúdo baixado com sucesso!"
-        },
-        "Language": {
-            "Message": "Escolha o idioma"
-        },
-        "__init__": {
-            "Error": "Lamentamos. No entanto, não conseguimos baixar o conteúdo do site. Verifique nossa documentação sobre quais sites estão disponíveis!"
-        },
-        "Options": {
-            "Message": " O que você quer fazer?",
-            "Choices": [
-                "Abrir Cache",
-                "Limpar Cache",
-                "Abrir Logs",
-                "Limpar Logs",
-                "Alterar idioma",
-                "Atualizar Aplicação"
-            ]
-        }
-    },
     "en-us": {
         "Home": {
             "Message": "Welcome to Nexus file.",
@@ -114,13 +52,55 @@
         "Options": {
             "Message": " What would you like to do?",
             "Choices": [
-                "Open Cache",
-                "Clear Cache",
-                "Open Logs",
-                "Clear Logs",
-                "Change Language",
-                "Update Application"
+                "Storage",
+                "Network",
+                "Connectivity",
+                "System",
+                "Exit"
             ]
-        }
+        },
+        "Storage": {
+            "Message": " Here you have all the saved data, internally",
+            "Choices": [
+                "Manage Cache",
+                "Manage Logs"
+            ]
+        },
+        "Manage_Cache": {
+            "Message": " What would you like to do with the Cache",
+            "Choices": [
+                "Open Folder",
+                "Clear Data"
+            ]
+        },
+        "Manage_Logs": {
+            "Message": " What you would like to do with the Logs",
+            "Choices": [
+                "Open Folder",
+                "Clear Files"
+            ]
+        },
+        "Network": {
+            "Message": "Select download profile:",
+            "Choices": [
+                "Unlimited (Max) ",
+                "Eco Mode (1 MB/s)",
+                "Balanced (10 MB/s) ",
+                "Fast (50 MB/s)",
+                "Custom"
+            ]
+        },
+        "Custom_Rate_Limit": {
+            "Message": "Choose how much MB The Program will use at most:"
+        },
+        "System": {
+            "Message": "Select download profile:",
+            "Choices": [
+                "Update Application",
+                "Change Language",
+                "Exit"
+            ]
+        },
+        "Connectivity":{"Message":"I've already read the QR Code"}
     }
 }

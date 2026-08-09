@@ -19,10 +19,14 @@
   },
   "dependencies": {
     "@inquirer/prompts": "^8.5.2",
+    "@pinggy/pinggy": "^0.4.9",
+    "archiver": "^8.0.0",
     "axios": "^1.17.0",
     "caxa": "^3.0.1",
     "cheerio": "^1.2.0",
+    "express": "^5.2.1",
     "open": "^11.0.0",
-    "ora": "^9.4.0"
+    "ora": "^9.4.0",
+    "qrcode": "^1.5.4"
   }
 }

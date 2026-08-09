@@ -2,7 +2,9 @@ const fs = require('fs')
 const open = require('open')
 const path = require('path')
 const axios = require('axios')
+const QRCode = require("qrcode")
 const inquirer = require("@inquirer/prompts")
+const ConnectivityFunction = require("./public/src/connectivity.js")
 const Settings = require("./public/json/Settings.json")
 const Controllers = require("./public/src/controllers.js")
 const Translation = require("./public/json/Translation.json")
@@ -95,7 +97,7 @@ const Interface = {
     async Settings() {
         let Options = await inquirer.select({
             message: Translation[Settings.Language].Options.Message,
-            choices: Translation[Settings.Language].Options.Choices.map((name, index) => ({ name: name, value: ["OpenCache", "ClearCache", "OpenLogs", "ClearLogs", "ChangeLanguage", "UpdateApplications"][index] })),
+            choices: Translation[Settings.Language].Options.Choices.map((name, index) => ({ name: name, value: ["Storage", "Network", "Connectivity", "System"][index] })),
             theme: {
                 prefix: "⚙️",
                 icon: {
@@ -106,14 +108,93 @@ const Interface = {
         if (this[Options]) { await this[Options]() }
     },
 
+    async System() {
+        let Options = await inquirer.select({
+            message: Translation[Settings.Language].System.Message,
+            choices: Translation[Settings.Language].System.Choices.map((name, index) => ({ name: name, value: ["UpdateApplications", "ChangeLanguage"][index] })),
+            theme: {
+                prefix: "💻",
+                icon: {
+                    cursor: "📀"
+                }
+            }
+        })
+        if (this[Options]) { await this[Options]() }
+    },
+
+    async Network() {
+        let Options = await inquirer.select({
+            message: Translation[Settings.Language].Network.Message,
+            choices: Translation[Settings.Language].Network.Choices.map((name, index) => ({ name: name, value: ["Unlimited", "Eco_Mode", "Balanced", "Fast", "Custom"][index] })),
+            theme: {
+                prefix: "🌐",
+                icon: {
+                    cursor: "💠"
+                }
+            }
+        })
+        if (this[Options]) { await this[Options]() }
+    },
+    async Unlimited() { this.SaveSettings("Rate-Limit", 1125899906842624) },
+    async Eco_Mode() { this.SaveSettings("Rate-Limit", 1 * 1024 * 1024) },
+    async Balanced() { this.SaveSettings("Rate-Limit", 10 * 1024 * 1024) },
+    async Fast() { this.SaveSettings("Rate-Limit", 50 * 1024 * 1024) },
+    async Custom() {
+        let n = await inquirer.number({ message: Translation[Settings.Language].Custom_Rate_Limit.Message, })
+        if (n != undefined) { n >= 1125899906842624 ? this.SaveSettings("Rate-Limit", 1125899906842624) : this.SaveSettings("Rate-Limit", n * 1024 * 1024) }
+    },
+
+    async Storage() {
+        let Options = await inquirer.select({
+            message: Translation[Settings.Language].Storage.Message,
+            choices: Translation[Settings.Language].Storage.Choices.map((name, index) => ({ name: name, value: ["Manage_Cache", "Manage_Logs"][index] })),
+            theme: {
+                prefix: "💼",
+                icon: {
+                    cursor: "🟣"
+                }
+            }
+        })
+        if (this[Options]) { await this[Options]() }
+    },
+
+    async Manage_Cache() {
+        let Options = await inquirer.select({
+            message: Translation[Settings.Language].Manage_Cache.Message,
+            choices: Translation[Settings.Language].Manage_Cache.Choices.map((name, index) => ({ name: name, value: ["OpenCache", "ClearCache"][index] })),
+            theme: {
+                prefix: "♻",
+                icon: {
+                    cursor: "⚪"
+                }
+            }
+        })
+        if (this[Options]) { await this[Options]() }
+    },
+    async Manage_Logs() {
+        let Options = await inquirer.select({
+            message: Translation[Settings.Language].Manage_Logs.Message,
+            choices: Translation[Settings.Language].Manage_Logs.Choices.map((name, index) => ({ name: name, value: ["OpenLogs", "ClearLogs"][index] })),
+            theme: {
+                prefix: "♻",
+                icon: {
+                    cursor: "🔘"
+                }
+            }
+        })
+        if (this[Options]) { await this[Options]() }
+    },
     async OpenCache() {
         open.default(path.join(__dirname, "public", "Cache")).catch(async err => { if (err) { console.log(Translation[Settings.Language].Default.Error.Message) } });
         await WaitSeconds(2.5)
     },
 
     async ClearCache() {
-        await fs.rmSync(path.join(__dirname, "public", "Cache"), { force: true, recursive: true, maxRetries: 3 })
-        await WaitSeconds(2.5)
+        if (fs.existsSync(path.join(__dirname, "public", "Cache"))) {
+            await WaitSeconds(2)
+            await fs.rmSync(path.join(__dirname, "public", "Cache"), { force: true, recursive: true, maxRetries: 3, retryDelay: 1000 })
+            await WaitSeconds(2.5)
+        }
     },
 
     async OpenLogs() {
@@ -122,8 +203,11 @@ const Interface = {
     },
 
     async ClearLogs() {
-        await fs.rmSync(path.join(__dirname, "public", "Logs"), { force: true, recursive: true, maxRetries: 3 })
-        await WaitSeconds(2.5)
+        if (fs.existsSync(path.join(__dirname, "public", "Logs"))) {
+            await WaitSeconds(2)
+            await fs.rmSync(path.join(__dirname, "public", "Logs"), { force: true, recursive: true, maxRetries: 3, retryDelay: 1000 })
+            await WaitSeconds(2.5)
+        }
     },
 
     async UpdateApplications() {
@@ -160,18 +244,37 @@ const Interface = {
 
     async ChangeLanguage() {
         let Data = []
-        for (l in Translation) {
-            Data.push(l)
-        }
-        let Select = await inquirer.select({
-            message: Translation[Settings.Language].Language.Message,
-            choices: Data
-        })
-        Settings.Language = Select
-        fs.writeFileSync(`${path.join(__dirname, "public", "json", "settings.json")}`, `{"Language":"${Select}"}`)
-        console.clear()
+        for (l in Translation) { Data.push(l) }
+        let Language = await inquirer.select({ message: Translation[Settings.Language].Language.Message, choices: Data })
+        this.SaveSettings("Language", Language)
     },
 
+    async SaveSettings(Modify, Value) {
+        const SettingsPath = path.join(__dirname, "public", "json", "settings.json")
+        let Data = await fs.readFileSync(SettingsPath)
+        let SettingsFile = JSON.parse(Data)
+        if (SettingsFile[Modify]) {
+            SettingsFile[Modify] = Value
+            Settings[Modify] = Value
+            fs.writeFileSync(SettingsPath, JSON.stringify(SettingsFile))
+        }
+
+
+    },
+    async Connectivity() {
+        const URL = (await ConnectivityFunction.getUrl())
+        QRCode.toString(URL, {
+            type: 'terminal',
+            errorCorrectionLevel: 'H',
+            scale:0,
+            small:true,
+        }, async (err, url) => {
+            if (err) { console.error(err) }
+            console.log(url)
+        })
+        ConnectivityFunction.__init__()
+        let Options = await inquirer.confirm({ message: Translation[Settings.Language].Connectivity.Message })
+    },
     async Exit() { process.exit() }
 
 }
@@ -180,7 +283,6 @@ const Interface = {
 async function main() {
     while (true) {
         console.clear()
-
         let init = await inquirer.select({
             message: Translation[Settings.Language].Home.Message,
             choices: Translation[Settings.Language].Home.Choices.map((name, index) => ({ name: name, value: ["ENTER", "Settings", "Exit"][index] })),
@@ -191,7 +293,6 @@ async function main() {
                 }
             }
         })
-
         if (Interface[init]) { await Interface[init]() } else { continue }
     }
 }

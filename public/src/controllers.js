@@ -1,6 +1,4 @@
-let Command
-let MLSpinner
-let MLList
+let Command, MLList,MLSpinner
 const ora = require('ora')
 const path = require("path")
 const axios = require("axios")
@@ -9,7 +7,6 @@ const cheerio = require("cheerio")
 const { existsSync } = require("fs")
 const Logs = path.join(__dirname, "../", "Logs")
 const Settings = require("../json/Settings.json")
-const settings = require("../json/Settings.json")
 const Cache = path.join(__dirname, "../", "Cache")
 const utils = path.join(__dirname, "../", "utils")
 const Translation = require("../json/Translation.json")
@@ -34,6 +31,7 @@ async function VerifyFolders() {
         const { EventType, filename } = event
         if (!filename) return;
         if (filename == "Cache" || filename == "Videos.txt" || filename == "Sounds.txt" || filename == "Books.txt" || filename == "Logs" || filename == "yt-dlp_log.txt" || filename == "Nexus-files.log") {
+            await WaitSeconds(1)
             fs.mkdir(Cache, { recursive: true })
             fs.mkdir(`${path.join(__dirname, "../", "logs")}`, { recursive: true })
             if (!existsSync(`${Cache}/Videos.txt`)) { fs.writeFile(`${Cache}/Videos.txt`, '', "utf-8") };
@@ -101,14 +99,14 @@ const Donwload = class {
     async CoreYtdl({ Urls }) {
         if (this.Data.Websites === "File") {
             if (this.UserData.Type === "Sounds") {
-                Command = `"${utils}\\yt-dlp.exe" --yes-playlist -x --audio-format ${this.UserData.Format} --ffmpeg-location "${utils}" -a "${Urls}" --audio-quality 0 --embed-thumbnail --embed-metadata --embed-chapters --embed-info-json --convert-thumbnails png --retries 10 --fragment-retries 10 --download-archive "${Cache}\\Sounds.txt" --sleep-requests 5 --sleep-interval 3 --max-sleep-interval 5 -o "Download/Songs/%(uploader)s/%(title)s.%(ext)s" >> "${Logs}\\yt-dlp.log"`
+                Command = `"${utils}\\yt-dlp.exe" --limit-rate ${Settings['Rate-Limit']} --yes-playlist -x --audio-format ${this.UserData.Format} --ffmpeg-location "${utils}" -a "${Urls}" --audio-quality 0 --embed-thumbnail --embed-metadata --embed-chapters --embed-info-json --convert-thumbnails png --retries 10 --fragment-retries 10 --download-archive "${Cache}\\Sounds.txt" --sleep-requests 5 --sleep-interval 3 --max-sleep-interval 5 -o "Download/Songs/%(uploader)s/%(title)s.%(ext)s" >> "${Logs}\\yt-dlp.log"`
             } else {
-                Command = `"${utils}\\yt-dlp.exe" --ffmpeg-location "${utils}" -a "${Urls}" --yes-playlist -f "bv*[height<=4320]+ba/bv*+ba/b/best" --remux-video ${this.UserData.Format} --embed-thumbnail --embed-metadata --embed-chapters --embed-info-json --convert-thumbnails png --retries 10 --fragment-retries 10 --download-archive "${Cache}\\Videos.txt" --sleep-requests 5 --sleep-interval 5 --max-sleep-interval 15 -o "Download/Videos/%(uploader)s/%(title)s.%(ext)s" >> "${Logs}\\yt-dlp.log"`
+                Command = `"${utils}\\yt-dlp.exe" --limit-rate ${Settings['Rate-Limit']} --ffmpeg-location "${utils}" -a "${Urls}" --yes-playlist -f "bv*[height<=4320]+ba/bv*+ba/b/best" --remux-video ${this.UserData.Format} --embed-thumbnail --embed-metadata --embed-chapters --embed-info-json --convert-thumbnails png --retries 10 --fragment-retries 10 --download-archive "${Cache}\\Videos.txt" --sleep-requests 5 --sleep-interval 5 --max-sleep-interval 15 -o "Download/Videos/%(uploader)s/%(title)s.%(ext)s" >> "${Logs}\\yt-dlp.log"`
             }
         } else {
             this.UserData.Type === "Sounds" ?
-                Command = `"${utils}\\yt-dlp.exe" --yes-playlist -x --audio-format ${this.UserData.Format} --ffmpeg-location "${utils}" --audio-quality 0 --embed-thumbnail --embed-metadata --embed-chapters --embed-info-json --convert-thumbnails png --retries 10 --fragment-retries 10 --download-archive "${Cache}\\Sounds.txt" --sleep-requests 5 --sleep-interval 3 --max-sleep-interval 5 -o "Download/Songs/%(uploader)s/%(title)s.%(ext)s" "${Urls}" >> "${Logs}\\yt-dlp.log"` :
-                Command = `"${utils}\\yt-dlp.exe" --ffmpeg-location "${utils}" --yes-playlist -f "bv*[height<=4320]+ba/bv*+ba/b/best" --remux-video ${this.UserData.Format} --embed-thumbnail --embed-metadata --embed-chapters --embed-info-json --convert-thumbnails png --retries 10 --fragment-retries 10 --download-archive "${Cache}\\Videos.txt" --sleep-requests 5 --sleep-interval 5 --max-sleep-interval 15 -o "Download/Videos/%(uploader)s/%(title)s.%(ext)s" "${Urls}" >> "${Logs}\\yt-dlp.log"`
+                Command = `"${utils}\\yt-dlp.exe" --limit-rate ${Settings['Rate-Limit']} --yes-playlist -x --audio-format ${this.UserData.Format} --ffmpeg-location "${utils}" --audio-quality 0 --embed-thumbnail --embed-metadata --embed-chapters --embed-info-json --convert-thumbnails png --retries 10 --fragment-retries 10 --download-archive "${Cache}\\Sounds.txt" --sleep-requests 5 --sleep-interval 3 --max-sleep-interval 5 -o "Download/Songs/%(uploader)s/%(title)s.%(ext)s" "${Urls}" >> "${Logs}\\yt-dlp.log"` :
+                Command = `"${utils}\\yt-dlp.exe" --limit-rate ${Settings['Rate-Limit']} --ffmpeg-location "${utils}" --yes-playlist -f "bv*[height<=4320]+ba/bv*+ba/b/best" --remux-video ${this.UserData.Format} --embed-thumbnail --embed-metadata --embed-chapters --embed-info-json --convert-thumbnails png --retries 10 --fragment-retries 10 --download-archive "${Cache}\\Videos.txt" --sleep-requests 5 --sleep-interval 5 --max-sleep-interval 15 -o "Download/Videos/%(uploader)s/%(title)s.%(ext)s" "${Urls}" >> "${Logs}\\yt-dlp.log"`
         }
         await new Promise((resolver, reject) => {
             const ytdlp = spawn(Command, { shell: true, maxBuffer: 1024 * 1024 * 50, stdio: ['pipe', 'pipe', 'pipe'] })
@@ -160,6 +158,7 @@ const Donwload = class {
                             responseType: "arraybuffer",
                             timeout: 10000,
                             maxContentLength: Infinity,
+                            maxRate:Settings['Rate-Limit'],
                             validateStatus: function (status) {
                                 return status >= 200 && status < 300;
                             }
@@ -198,7 +197,7 @@ const Donwload = class {
                 data.split('\n').forEach(line => { if (line.trim()) BooksCache.add(line.trim()) });
                 let CacheSave = []
                 if (!BooksCache.has(Cover)) {
-                    const img_cover = await axios.get(Cover, { responseType: "arraybuffer" })
+                    const img_cover = await axios.get(Cover, { responseType: "arraybuffer",maxRate:Settings['Rate-Limit']})
                     let title = /<title>(.*?)<\/title>/.exec(Page.data)[1].trim().replace(/[<>:"/\\|?*]/g, '');
                     await fs.mkdir(`./Download/Books/${title}`, { recursive: true })
                     await fs.writeFile(`./Download/Books/${title}/cover.png`, img_cover.data)
